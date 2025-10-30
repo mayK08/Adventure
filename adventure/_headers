@@ -1,0 +1,23 @@
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  Vary: Accept-Encoding
+
+/Build/*.framework.js.unityweb
+  Content-Type: application/javascript
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+/Build/*.wasm.unityweb
+  Content-Type: application/wasm
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+/Build/*.data.unityweb
+  Content-Type: application/octet-stream
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+/Build/*.loader.js
+  Content-Type: application/javascript
+  Cache-Control: public, max-age=0, must-revalidate
+
