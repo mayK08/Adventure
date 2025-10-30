@@ -27,7 +27,6 @@
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
-      // Mostrar mensajes/avisos sobre el canvas
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -40,7 +39,7 @@
           div.style = 'background: red; padding: 10px;';
         } else {
           if (type === 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
+          setTimeout(function () {
             warningBanner.removeChild(div);
             updateBannerVisibility();
           }, 5000);
@@ -62,21 +61,13 @@
         productVersion: "1.0",
         showBanner: unityShowBanner,
 
-        // >>> IMPORTANTE: evita el TypeError cuando el servidor no envía Cache-Control
-        cacheControl: "public, max-age=0, must-revalidate"
-        // <<<
-
-        // Si quieres desincronizar el tamaño del render de WebGL del tamaño del canvas:
-        // matchWebGLToCanvasSize: false,
-
-        // Para bajar resolución en móviles:
-        // devicePixelRatio: 1,
-
-        // Para sincronizar automáticamente Application.persistentDataPath:
-        // autoSyncPersistentDataPath: true
+        // Importante: el loader llama a "cacheControl" como FUNCIÓN.
+        // Devolvemos una cadena válida para evitar el fallo cuando el
+        // servidor no envía este header.
+        cacheControl: () => "public, max-age=0, must-revalidate"
       };
 
-      // Ajustes de estilo para móvil/escritorio
+      // Estilos según dispositivo
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -84,7 +75,7 @@
         document.getElementsByTagName('head')[0].appendChild(meta);
         document.querySelector("#unity-container").className = "unity-mobile";
         canvas.className = "unity-mobile";
-        // config.devicePixelRatio = 1; // (opcional) menos resolución = más rendimiento
+        // config.devicePixelRatio = 1; // opcional
       } else {
         canvas.style.width  = "960px";
         canvas.style.height = "600px";
@@ -92,7 +83,6 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
-      // Carga del loader y arranque de la instancia
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
